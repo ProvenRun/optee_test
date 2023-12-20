@@ -25,6 +25,10 @@ ADBG_SUITE_DECLARE(ffa_spmc);
 #endif
 ADBG_SUITE_DECLARE(regression);
 
+/* KEYSTONE-B TESTS */
+ADBG_SUITE_DECLARE(keystoneb);
+/* KEYSTONE-B TESTS */
+
 /* TEEC_Result */
 ADBG_ENUM_TABLE_DECLARE(TEEC_Result);
 
@@ -141,6 +145,7 @@ extern const TEEC_UUID large_ta_uuid;
 extern const TEEC_UUID bti_test_ta_uuid;
 extern const TEEC_UUID subkey1_ta_uuid;
 extern const TEEC_UUID subkey2_ta_uuid;
+extern const TEEC_UUID keystoneb_test_ta_uuid;
 extern char *xtest_tee_name;
 extern char *xtest_progname;
 

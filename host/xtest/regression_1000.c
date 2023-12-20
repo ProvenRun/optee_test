@@ -3274,3 +3274,95 @@ static void xtest_tee_test_1039(ADBG_Case_t *c)
 
 ADBG_CASE_DEFINE(regression, 1039, xtest_tee_test_1039,
 		 "Test subkey verification");
+
+/* KEYSTONE-B TESTS */
+#define KEYSTONEB_TEST_CMD_PMC_GPIO		0x00
+#define KEYSTONEB_TEST_CMD_PS_GPIO		0x01
+#define KEYSTONEB_TEST_CMD_NVM			0x10
+#define KEYSTONEB_TEST_CMD_PUF			0x20
+
+static void keystoneb_test_2000(ADBG_Case_t *c)
+{
+	TEEC_Result res = TEEC_ERROR_GENERIC;
+	TEEC_Session session = { };
+	uint32_t ret_orig = 0;
+
+	res = xtest_teec_open_session(&session, &keystoneb_test_ta_uuid, NULL,
+				      &ret_orig);
+	if (res == TEEC_ERROR_ITEM_NOT_FOUND) {
+		Do_ADBG_Log(" - 2000 -   skip test, pseudo TA not found");
+		return;
+	}
+	if (!ADBG_EXPECT_TEEC_SUCCESS(c, res))
+		return;
+
+	Do_ADBG_BeginSubCase(c, "Keystone-B PMC GPIO test");
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, KEYSTONEB_TEST_CMD_PMC_GPIO, NULL, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Keystone-B PMC GPIO test");
+
+	Do_ADBG_BeginSubCase(c, "Keystone-B PS GPIO test");
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, KEYSTONEB_TEST_CMD_PS_GPIO, NULL, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Keystone-B PS GPIO test");
+
+	TEEC_CloseSession(&session);
+}
+ADBG_CASE_DEFINE(keystoneb, 2000, keystoneb_test_2000, "Keystone-B Test GPIO");
+
+static void keystoneb_test_2010(ADBG_Case_t *c)
+{
+	TEEC_Result res = TEEC_ERROR_GENERIC;
+	TEEC_Session session = { };
+	uint32_t ret_orig = 0;
+
+	res = xtest_teec_open_session(&session, &keystoneb_test_ta_uuid, NULL,
+				      &ret_orig);
+	if (res == TEEC_ERROR_ITEM_NOT_FOUND) {
+		Do_ADBG_Log(" - 2010 -   skip test, pseudo TA not found");
+		return;
+	}
+	if (!ADBG_EXPECT_TEEC_SUCCESS(c, res))
+		return;
+
+	Do_ADBG_BeginSubCase(c, "Keystone-B NVM test");
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, KEYSTONEB_TEST_CMD_NVM, NULL, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Keystone-B NVM test");
+
+	TEEC_CloseSession(&session);
+}
+ADBG_CASE_DEFINE(keystoneb, 2010, keystoneb_test_2010, "Keystone-B Test NVM");
+
+static void keystoneb_test_2020(ADBG_Case_t *c)
+{
+	TEEC_Result res = TEEC_ERROR_GENERIC;
+	TEEC_Session session = { };
+	uint32_t ret_orig = 0;
+
+	res = xtest_teec_open_session(&session, &keystoneb_test_ta_uuid, NULL,
+				      &ret_orig);
+	if (res == TEEC_ERROR_ITEM_NOT_FOUND) {
+		Do_ADBG_Log(" - 2020 -   skip test, pseudo TA not found");
+		return;
+	}
+	if (!ADBG_EXPECT_TEEC_SUCCESS(c, res))
+		return;
+
+	Do_ADBG_BeginSubCase(c, "Keystone-B PUF test");
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, KEYSTONEB_TEST_CMD_PUF, NULL, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Keystone-B PUF test");
+
+	TEEC_CloseSession(&session);
+}
+ADBG_CASE_DEFINE(keystoneb, 2020, keystoneb_test_2020, "Keystone-B Test PUF");
+

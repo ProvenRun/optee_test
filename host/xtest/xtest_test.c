@@ -183,6 +183,12 @@ ADBG_ENUM_TABLE_DEFINE_END(CK_RV);
 		{ 0xf34f4f3c, 0xab30, 0x4573,  \
 		{ 0x91, 0xBF, 0x3C, 0x57, 0x02, 0x4D, 0x51, 0x99 } }
 
+/* KEYSTONE-B TESTS */
+#define KEYSTONEB_TEST_TA_UUID \
+		{ 0xf60b2cbc, 0xd14e, 0x4ffb, \
+		{ 0x8f, 0xdc, 0x25, 0x86, 0xfb, 0x20, 0x3d, 0xf0 } }
+/* KEYSTONE-B TESTS */
+
 const TEEC_UUID crypt_user_ta_uuid = TA_CRYPT_UUID;
 const TEEC_UUID os_test_ta_uuid = TA_OS_TEST_UUID;
 const TEEC_UUID create_fail_test_ta_uuid = TA_CREATE_FAIL_TEST_UUID;
@@ -206,3 +212,4 @@ const TEEC_UUID large_ta_uuid = TA_LARGE_UUID;
 const TEEC_UUID bti_test_ta_uuid = TA_BTI_UUID;
 const TEEC_UUID subkey1_ta_uuid = TA_SUBKEY1_UUID;
 const TEEC_UUID subkey2_ta_uuid = TA_SUBKEY2_UUID;
+const TEEC_UUID keystoneb_test_ta_uuid = KEYSTONEB_TEST_TA_UUID;
