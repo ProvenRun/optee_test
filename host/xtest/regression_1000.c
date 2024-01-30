@@ -3280,6 +3280,7 @@ ADBG_CASE_DEFINE(regression, 1039, xtest_tee_test_1039,
 #define KEYSTONEB_TEST_CMD_PS_GPIO		0x01
 #define KEYSTONEB_TEST_CMD_NVM			0x10
 #define KEYSTONEB_TEST_CMD_PUF			0x20
+#define KEYSTONEB_TEST_CMD_PKI			0x40
 
 static void keystoneb_test_2000(ADBG_Case_t *c)
 {
@@ -3366,3 +3367,28 @@ static void keystoneb_test_2020(ADBG_Case_t *c)
 }
 ADBG_CASE_DEFINE(keystoneb, 2020, keystoneb_test_2020, "Keystone-B Test PUF");
 
+static void keystoneb_test_2040(ADBG_Case_t *c)
+{
+	TEEC_Result res = TEEC_ERROR_GENERIC;
+	TEEC_Session session = { };
+	uint32_t ret_orig = 0;
+
+	res = xtest_teec_open_session(&session, &keystoneb_test_ta_uuid, NULL,
+				      &ret_orig);
+	if (res == TEEC_ERROR_ITEM_NOT_FOUND) {
+		Do_ADBG_Log(" - 2040 -   skip test, pseudo TA not found");
+		return;
+	}
+	if (!ADBG_EXPECT_TEEC_SUCCESS(c, res))
+		return;
+
+	Do_ADBG_BeginSubCase(c, "Keystone-B PKI test");
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, KEYSTONEB_TEST_CMD_PKI, NULL, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Keystone-B PKI test");
+
+	TEEC_CloseSession(&session);
+}
+ADBG_CASE_DEFINE(keystoneb, 2040, keystoneb_test_2040, "Keystone-B Test PKI");
