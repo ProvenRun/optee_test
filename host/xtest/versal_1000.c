@@ -113,7 +113,11 @@ static void versal_test_1040(ADBG_Case_t *c)
 {
 	TEEC_Result res = TEEC_ERROR_GENERIC;
 	TEEC_Session session = { };
+	TEEC_Operation op = TEEC_OPERATION_INITIALIZER;
 	uint32_t ret_orig = 0;
+
+	op.paramTypes = TEEC_PARAM_TYPES(TEEC_VALUE_INPUT, TEEC_NONE,
+					 TEEC_NONE, TEEC_NONE);
 
 	res = xtest_teec_open_session(&session, &versal_test_ta_uuid, NULL,
 				      &ret_orig);
@@ -124,12 +128,32 @@ static void versal_test_1040(ADBG_Case_t *c)
 	if (!ADBG_EXPECT_TEEC_SUCCESS(c, res))
 		return;
 
-	Do_ADBG_BeginSubCase(c, "Versal PKI test");
+	Do_ADBG_BeginSubCase(c, "Versal PKI - Sign/Verify P256");
+
+	op.params[0].value.a = TEE_ECC_CURVE_NIST_P256;
 
 	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
-		&session, VERSAL_TEST_CMD_PKI, NULL, &ret_orig));
+		&session, VERSAL_TEST_CMD_PKI, &op, &ret_orig));
 
-	Do_ADBG_EndSubCase(c, "Versal PKI test");
+	Do_ADBG_EndSubCase(c, "Versal PKI - Sign/Verify P256");
+
+	Do_ADBG_BeginSubCase(c, "Versal PKI - Sign/Verify P384");
+
+	op.params[0].value.a = TEE_ECC_CURVE_NIST_P384;
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, VERSAL_TEST_CMD_PKI, &op, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Versal PKI - Sign/Verify P384");
+
+	Do_ADBG_BeginSubCase(c, "Versal PKI - Sign/Verify P521");
+
+	op.params[0].value.a = TEE_ECC_CURVE_NIST_P521;
+
+	(void)ADBG_EXPECT_TEEC_SUCCESS(c, TEEC_InvokeCommand(
+		&session, VERSAL_TEST_CMD_PKI, &op, &ret_orig));
+
+	Do_ADBG_EndSubCase(c, "Versal PKI - Sign/Verify P521");
 
 	TEEC_CloseSession(&session);
 }
