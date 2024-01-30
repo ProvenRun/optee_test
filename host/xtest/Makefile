@@ -110,6 +110,11 @@ ifeq ($(CFG_CRYPTO_SE05X),y)
 CFLAGS += -DCFG_CRYPTO_SE05X
 endif
 
+ifeq ($(CFG_VERSAL_BUILD_TEST_CODE),y)
+CFLAGS += -DCFG_VERSAL_BUILD_TEST_CODE
+srcs += versal_1000.c
+endif
+
 CFLAGS += -I./
 CFLAGS += -I./adbg/include
 CFLAGS += -I../supp_plugin/include

@@ -42,9 +42,11 @@ ADBG_SUITE_DEFINE(ffa_spmc);
 #endif
 ADBG_SUITE_DEFINE(regression);
 
-/* KEYSTONE-B TESTS */
-ADBG_SUITE_DEFINE(keystoneb);
-/* KEYSTONE-B TESTS */
+/* VERSAL TESTS */
+#ifdef CFG_VERSAL_BUILD_TEST_CODE
+ADBG_SUITE_DEFINE(versal);
+#endif
+/* VERSAL TESTS */
 
 char *xtest_progname;
 char *xtest_tee_name = NULL;
@@ -273,8 +275,10 @@ next:
 		else if (!strcmp(token, "ffa_spmc"))
 			ret = Do_ADBG_AppendToSuite(&all, &ADBG_Suite_ffa_spmc);
 #endif
-		else if (!strcmp(token, "keystoneb"))
-			ret = Do_ADBG_AppendToSuite(&all, &ADBG_Suite_keystoneb);
+#ifdef CFG_VERSAL_BUILD_TEST_CODE
+		else if (!strcmp(token, "versal"))
+			ret = Do_ADBG_AppendToSuite(&all, &ADBG_Suite_versal);
+#endif
 		else {
 			fprintf(stderr, "Unkown test suite: %s\n", token);
 			ret = -1;

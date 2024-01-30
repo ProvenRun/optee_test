@@ -117,6 +117,11 @@ if (CFG_CRYPTO_SE05X)
 	add_compile_options(-DCFG_CRYPTO_SE05X)
 endif()
 
+if (CFG_VERSAL_BUILD_TEST_CODE)
+	add_compile_options(-DCFG_VERSAL_BUILD_TEST_CODE)
+	list (APPEND SRC versal_1000.c)
+endif()
+
 ################################################################################
 # Built binary
 ################################################################################

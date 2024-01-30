@@ -25,9 +25,11 @@ ADBG_SUITE_DECLARE(ffa_spmc);
 #endif
 ADBG_SUITE_DECLARE(regression);
 
-/* KEYSTONE-B TESTS */
-ADBG_SUITE_DECLARE(keystoneb);
-/* KEYSTONE-B TESTS */
+/* VERSAL TESTS */
+#ifdef CFG_VERSAL_BUILD_TEST_CODE
+ADBG_SUITE_DECLARE(versal);
+#endif
+/* VERSAL TESTS */
 
 /* TEEC_Result */
 ADBG_ENUM_TABLE_DECLARE(TEEC_Result);
@@ -145,7 +147,9 @@ extern const TEEC_UUID large_ta_uuid;
 extern const TEEC_UUID bti_test_ta_uuid;
 extern const TEEC_UUID subkey1_ta_uuid;
 extern const TEEC_UUID subkey2_ta_uuid;
-extern const TEEC_UUID keystoneb_test_ta_uuid;
+#ifdef CFG_VERSAL_BUILD_TEST_CODE
+extern const TEEC_UUID versal_test_ta_uuid;
+#endif
 extern char *xtest_tee_name;
 extern char *xtest_progname;
 
